@@ -1,0 +1,64 @@
+html {
+  font-size: 62.5%;
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+body {
+  font-size: 1.6rem;
+  font-family: "Roboto", sans-serif;
+  margin: 0;
+  padding: 0;
+  min-height: 100svh;
+  justify-items: center;
+}
+
+/* Elements */
+
+.card {
+  flex: 1;
+  border: 3px solid black;
+  max-width: 40rem;
+  margin: 10rem auto;
+}
+
+.card img {
+  width: 100%;
+  aspect-ratio: 1;
+}
+
+.card__content {
+  padding: 2.5rem;
+  padding-top: 1.2rem;
+}
+
+.card__content h3 {
+  font-size: 2.4rem;
+}
+
+.card__content p {
+  text-align: justify;
+}
+
+.skillList div {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  gap: 1.8rem;
+}
+
+.skillList span {
+  border-radius: 0.8rem;
+  background-color: aqua;
+  padding: 0.4rem 1.2rem;
+  display: flex;
+  gap: 1rem;
+}
