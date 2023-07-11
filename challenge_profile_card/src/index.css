@@ -24,7 +24,8 @@ body {
   flex: 1;
   border: 3px solid black;
   max-width: 40rem;
-  margin: 10rem auto;
+  margin: 8rem auto;
+  border-radius: 5px;
 }
 
 .card img {
@@ -61,4 +62,5 @@ body {
   padding: 0.4rem 1.2rem;
   display: flex;
   gap: 1rem;
+  font-weight: 600;
 }

@@ -1,15 +1,12 @@
 import PropTypes from "prop-types";
+import SkillIcon from "./SkillIcon";
 
-export default function SkillList({ skills }, props) {
+export default function SkillList({ skills, ...props }) {
   return (
     <section className="skillList" {...props}>
       <div>
         {skills.map((skill) => {
-          return (
-            <span style={{ backgroundColor: skill.color }} key={skill.id}>
-              {skill.name} {skill.emoji}
-            </span>
-          );
+          return <SkillIcon skill={skill} key={skill.id} />;
         })}
       </div>
     </section>
@@ -17,5 +14,5 @@ export default function SkillList({ skills }, props) {
 }
 
 SkillList.propTypes = {
-  skills: PropTypes.arrayOf(PropTypes.object).isRequired,
+  skills: PropTypes.arrayOf(PropTypes.Array).isRequired,
 };

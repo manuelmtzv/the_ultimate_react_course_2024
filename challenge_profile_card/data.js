@@ -18,4 +18,22 @@ export const skills = [
     color: "#F7DF1E",
   },
   { id: 4, name: "React", emoji: "⚛️", color: "#61DBFB" },
+  {
+    id: 5,
+    name: "Node.js",
+    emoji: "📦",
+    color: "#339933",
+  },
+  {
+    id: 6,
+    name: "Express",
+    emoji: "🚂",
+    color: "#A8A196",
+  },
+  {
+    id: 7,
+    name: "Vue",
+    emoji: "🖖",
+    color: "#4FC08D",
+  },
 ];
