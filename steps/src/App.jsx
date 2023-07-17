@@ -1,59 +1,25 @@
-import { messages } from "../messajes";
-import { useState } from "react";
+import Steps from "./components/Steps";
+import { useState, useEffect } from "react";
 
 export default function App() {
-  const style = {
-    buttons: {
-      backgroundColor: "#7950f2",
-      color: "#fff",
-    },
-  };
+  const [open, setOpen] = useState(true);
+  const [icon, setIcon] = useState("");
 
-  const [step, setStep] = useState(1);
+  useEffect(() => {
+    setIcon(open ? "visibility_off" : "visibility");
+  }, [open]);
 
-  const {
-    previous,
-    next,
-  } = () => {
-    const previous = () => {
-      if (step > 1) {
-        setStep(step - 1);
-      }
-    };
+  function toggleOpen() {
+    setOpen((prev) => !prev);
+  }
 
-    const next = () => {
-      if (step < 3) {
-        setStep(step + 1);
-      }
-    };
-
-    console.log(step);
-
-    return {
-      previous,
-      next,
-    };
-  };
   return (
-    <div className="steps">
-      <div className="numbers">
-        <div className="active">1</div>
-        <div>2</div>
-        <div>3</div>
-      </div>
+    <>
+      {open && <Steps />}
 
-      <p className="message">
-        Step {step}: {messages[step - 1]}
-      </p>
-
-      <nav className="buttons">
-        <button style={style.buttons} onClick={() => previous}>
-          Previous
-        </button>
-        <button style={style.buttons} onClick={next}>
-          Next
-        </button>
-      </nav>
-    </div>
+      <button className="material-symbols-outlined close" onClick={toggleOpen}>
+        {icon}
+      </button>
+    </>
   );
 }
