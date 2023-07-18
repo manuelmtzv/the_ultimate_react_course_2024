@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 
-export default function Counter({ sum, substract, count }) {
+export default function Counter({ sum, substract, count, message }) {
   const styles = {
     display: "flex",
     justifyContent: "center",
@@ -12,7 +12,7 @@ export default function Counter({ sum, substract, count }) {
     <div style={styles}>
       <button onClick={substract}>-</button>
 
-      <p>{count}</p>
+      <p>{`${message}: ${count}`}</p>
 
       <button onClick={sum}>+</button>
     </div>
@@ -23,4 +23,5 @@ Counter.propTypes = {
   sum: PropTypes.func.isRequired,
   substract: PropTypes.func.isRequired,
   count: PropTypes.number.isRequired,
+  message: PropTypes.string.isRequired,
 };
