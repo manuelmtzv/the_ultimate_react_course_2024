@@ -1,13 +1,28 @@
 import { useState } from "react";
+import PropTypes from "prop-types";
 
-export default function Form() {
+export default function Form({ addItem }) {
   const [description, setDescription] = useState("");
   const [amount, setAmount] = useState(1);
+
+  const emptyDescription = description === "";
+
+  function resetValues() {
+    setDescription("");
+    setAmount(1);
+  }
 
   function handleSubmit(e) {
     e.preventDefault();
 
-    console.log(amount, description);
+    addItem({
+      id: Date.now(),
+      description,
+      amount,
+      packed: false,
+    });
+
+    resetValues();
   }
 
   return (
@@ -35,8 +50,19 @@ export default function Form() {
           placeholder="Item..."
         />
 
-        <button>Add</button>
+        <button
+          disabled={emptyDescription}
+          style={{
+            cursor: `${emptyDescription ? "not-allowed" : "pointer"}`,
+          }}
+        >
+          Add
+        </button>
       </div>
     </form>
   );
 }
+
+Form.propTypes = {
+  addItem: PropTypes.func.isRequired,
+};
