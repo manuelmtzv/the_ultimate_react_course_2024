@@ -15,15 +15,23 @@ export default function App() {
     setInitialItems((prevItems) => [item, ...prevItems]);
   }
 
+  function packItem(item) {
+    const updatedItems = initialItems.map((i) => {
+      return i.id === item.id ? { ...i, packed: !i.packed } : i;
+    });
+
+    setInitialItems(updatedItems);
+  }
+
   return (
     <div className="app">
       <Header />
 
       <Form addItem={addItem} />
 
-      <PackingList initialItems={initialItems} />
+      <PackingList initialItems={initialItems} packItem={packItem} />
 
-      <Footer />
+      <Footer items={initialItems} />
     </div>
   );
 }

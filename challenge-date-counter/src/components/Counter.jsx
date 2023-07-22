@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 
-export default function Counter({ sum, substract, count, message }) {
+export default function Counter({ sum, substract, setCount, count }) {
   const styles = {
     display: "flex",
     justifyContent: "center",
@@ -10,11 +10,20 @@ export default function Counter({ sum, substract, count, message }) {
 
   return (
     <div style={styles}>
-      <button onClick={substract}>-</button>
+      <label htmlFor="count">Count</label>
 
-      <p>{`${message}: ${count}`}</p>
+      <div>
+        <button onClick={substract}>-</button>
 
-      <button onClick={sum}>+</button>
+        <input
+          name="count"
+          type="number"
+          value={count}
+          onChange={(e) => setCount(Number(e.target.value))}
+        />
+
+        <button onClick={sum}>+</button>
+      </div>
     </div>
   );
 }
@@ -22,6 +31,6 @@ export default function Counter({ sum, substract, count, message }) {
 Counter.propTypes = {
   sum: PropTypes.func.isRequired,
   substract: PropTypes.func.isRequired,
+  setCount: PropTypes.func.isRequired,
   count: PropTypes.number.isRequired,
-  message: PropTypes.string.isRequired,
 };
