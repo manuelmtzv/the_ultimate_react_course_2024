@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Counter from "./Counter";
+import CountCounter from "./CountCounter";
 import StepSlider from "./Slider";
 import "../utils/addDays";
 import ResultDate from "./ResultDate";
@@ -41,7 +41,7 @@ export default function DateCounter() {
         <div style={style.container}>
           <StepSlider step={step} setStep={setStep} min={1} max={10} />
 
-          <Counter
+          <CountCounter
             sum={sumCount}
             substract={substractCount}
             setCount={setCountDirectly}

@@ -2,15 +2,17 @@ import PropTypes from "prop-types";
 
 export default function Counter({ sum, substract, setCount, count }) {
   const styles = {
-    display: "flex",
-    justifyContent: "center",
-    gap: "1rem",
-    height: "fit-content",
+    label: {
+      display: "block",
+      marginBottom: "0.4rem",
+    },
   };
 
   return (
-    <div style={styles}>
-      <label htmlFor="count">Count</label>
+    <div style={styles.container}>
+      <label htmlFor="count" style={styles.label}>
+        Count
+      </label>
 
       <div>
         <button onClick={substract}>-</button>
