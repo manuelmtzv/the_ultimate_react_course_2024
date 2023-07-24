@@ -1,20 +1,29 @@
-import { useEffect, useState } from "react";
-import PropTypes from 'prop-types'
+import PropTypes from "prop-types";
 
 export default function Footer({ items }) {
-  const [packedItems, setPackedItems] = useState(0)
+  if (!items.length)
+    return (
+      <p className="stats ">
+        <em>No items in the list</em>
+      </p>
+    );
 
-  useEffect(() => {
-    setPackedItems(items.filter(item => item.packed).length)
-  }, [items])
+  const packedItems = items.filter((item) => item.packed).length;
+  const percentage = ((packedItems / items.length) * 100).toFixed(2);
+
+  const statsMessage = `You have ${items.length} items on your list and you already packed ${packedItems} items (${percentage}%)!`;
 
   return (
-    <footer>
-      <em>{`You have ${items.length} items on your list and you already packed ${packedItems} items!`}</em>
+    <footer className="stats">
+      <em>
+        {items.length != packedItems
+          ? statsMessage
+          : "You got everything! Ready to go"}
+      </em>
     </footer>
   );
 }
 
 Footer.propTypes = {
   items: PropTypes.array.isRequired,
-}
+};

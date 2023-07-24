@@ -1,37 +1,58 @@
 import { useState } from "react";
 
+import { initialItems } from "./data/items";
 import Footer from "./components/Footer";
 import Form from "./components/Form";
 import Header from "./components/Header";
 import PackingList from "./components/PackingList";
 
 export default function App() {
-  const [initialItems, setInitialItems] = useState([
-    { id: 1, description: "Passports", quantity: 2, packed: true },
-    { id: 2, description: "Socks", quantity: 12, packed: false },
-  ]);
+  const [items, setItems] = useState(initialItems);
 
-  function addItem(item) {
-    setInitialItems((prevItems) => [item, ...prevItems]);
+  function handleAddItem(item) {
+    setItems((prevItems) => [item, ...prevItems]);
   }
 
-  function packItem(item) {
-    const updatedItems = initialItems.map((i) => {
-      return i.id === item.id ? { ...i, packed: !i.packed } : i;
-    });
+  function handleDeleteItem(item) {
+    const updatedItems = items.filter((i) => i.id !== item.id);
 
-    setInitialItems(updatedItems);
+    setItems(updatedItems);
+  }
+
+  function handlePackItemToggle(itemId) {
+    setItems((prev) =>
+      prev.map((i) => {
+        return i.id == itemId ? { ...i, packed: !i.packed } : i;
+      })
+    );
+  }
+
+  function handleDeleteItems() {
+    if (items.length) {
+      const confirmed = window.confirm(
+        "Are you sure you want to delete all items?"
+      );
+
+      if (confirmed) {
+        setItems([]);
+      }
+    }
   }
 
   return (
     <div className="app">
       <Header />
 
-      <Form addItem={addItem} />
+      <Form onAddItem={handleAddItem} />
 
-      <PackingList initialItems={initialItems} packItem={packItem} />
+      <PackingList
+        items={items}
+        onDeleteItem={handleDeleteItem}
+        onPackItemToggle={handlePackItemToggle}
+        onDeleteItems={handleDeleteItems}
+      />
 
-      <Footer items={initialItems} />
+      <Footer items={items} />
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
 
-export default function Form({ addItem }) {
+export default function Form({ onAddItem }) {
   const [description, setDescription] = useState("");
   const [amount, setAmount] = useState(1);
 
@@ -15,7 +15,7 @@ export default function Form({ addItem }) {
   function handleSubmit(e) {
     e.preventDefault();
 
-    addItem({
+    onAddItem({
       id: Date.now(),
       description,
       amount,
@@ -64,5 +64,5 @@ export default function Form({ addItem }) {
 }
 
 Form.propTypes = {
-  addItem: PropTypes.func.isRequired,
+  onAddItem: PropTypes.func.isRequired,
 };
