@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 
 export default function SatisfactionSelect({
   value,
+  target,
   setValue,
   options,
   children,
@@ -9,10 +10,13 @@ export default function SatisfactionSelect({
   return (
     <label>
       {children}
-      <select value={value} onChange={(e) => setValue("self", e.target.value)}>
+      <select
+        value={value}
+        onChange={(e) => setValue(target, Number(e.target.value))}
+      >
         {options.map((option) => (
-          <option key={option.id} value={option.id}>
-            {option.name}
+          <option key={option.id} value={option.percentage}>
+            {`${option.name} (${option.percentage}%)`}
           </option>
         ))}
       </select>
@@ -21,8 +25,9 @@ export default function SatisfactionSelect({
 }
 
 SatisfactionSelect.propTypes = {
-  value: PropTypes.string.isRequired,
+  value: PropTypes.number.isRequired,
+  target: PropTypes.string.isRequired,
   setValue: PropTypes.func.isRequired,
-  options: PropTypes.arrayOf(PropTypes.string).isRequired,
+  options: PropTypes.array.isRequired,
   children: PropTypes.node.isRequired,
 };

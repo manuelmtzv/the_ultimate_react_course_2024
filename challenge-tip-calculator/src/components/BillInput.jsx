@@ -1,20 +1,20 @@
-import PropTypes from "prop-types";
+import PropTypes, { number } from "prop-types";
 
 export default function BillInput({ value, setValue, children }) {
   return (
     <label>
       {children}
       <input
-        type="text"
+        type="number"
         value={value}
-        onChange={(e) => setValue(e.target.value)}
+        onChange={(e) => setValue(Number(e.target.value))}
       />
     </label>
   );
 }
 
 BillInput.propTypes = {
-  value: PropTypes.string.isRequired,
+  value: PropTypes.number.isRequired,
   setValue: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
 };
