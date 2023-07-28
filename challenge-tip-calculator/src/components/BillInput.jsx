@@ -1,4 +1,4 @@
-import PropTypes, { number } from "prop-types";
+import PropTypes from "prop-types";
 
 export default function BillInput({ value, setValue, children }) {
   return (
