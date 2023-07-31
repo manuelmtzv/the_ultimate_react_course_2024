@@ -2,11 +2,16 @@ import { useState } from "react";
 import { tempMovieData } from "./data/tempMovieData";
 import { tempWatchedData } from "./data/tempWatchedData";
 
-import BoxSection from "./components/BoxSection";
+import Main from "./components/Main";
+import NavBar from "./components/NavBar";
+import Logo from "./components/Logo";
+import ResultAmount from "./components/ResultAmount";
+import SearchBar from "./components/SearchBar";
 import MovieList from "./components/MovieList";
 import WatchedStadistics from "./components/WatchedStadistics";
 import WatchedList from "./components/WatchedList";
-import NavBar from "./components/NavBar";
+import ListBox from "./components/ListBox";
+import WatchedBox from "./components/WatchedBox";
 
 export default function App() {
   const [query, setQuery] = useState("");
@@ -15,19 +20,24 @@ export default function App() {
 
   return (
     <>
-      <NavBar movies={movies} query={query} onSetQuery={setQuery} />
+      <NavBar>
+        <Logo />
 
-      <main className="main">
-        <BoxSection>
+        <SearchBar query={query} onSetQuery={setQuery} />
+
+        <ResultAmount length={movies.length} />
+      </NavBar>
+
+      <Main>
+        <ListBox>
           <MovieList movies={movies} />
-        </BoxSection>
+        </ListBox>
 
-        <BoxSection>
+        <WatchedBox>
           <WatchedStadistics watchedMovies={watched} />
-
           <WatchedList watchedMovies={watched} />
-        </BoxSection>
-      </main>
+        </WatchedBox>
+      </Main>
     </>
   );
 }

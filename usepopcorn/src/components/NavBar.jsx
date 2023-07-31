@@ -1,22 +1,9 @@
-import Logo from './Logo'
-import ResultAmount from './ResultAmount'
-import SearchBar from './SearchBar'
-import PropTypes from 'prop-types'
+import PropTypes from "prop-types";
 
-export default function NavBar({ movies, query, onSetQuery }) {
-  return (
-    <nav className='nav-bar'>
-      <Logo />
-
-      <SearchBar query={query} onSetQuery={onSetQuery} />
-
-      <ResultAmount length={movies.length} />
-    </nav>
-  )
+export default function NavBar({ children }) {
+  return <nav className="nav-bar">{children}</nav>;
 }
 
 NavBar.propTypes = {
-  movies: PropTypes.array.isRequired,
-  query: PropTypes.string.isRequired,
-  onSetQuery: PropTypes.func.isRequired,
-}
+  children: PropTypes.node.isRequired,
+};
