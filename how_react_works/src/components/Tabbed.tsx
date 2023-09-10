@@ -1,4 +1,4 @@
-import { useState } from "react";
+ import { useState } from "react";
 
 import Tab from "./Tab";
 import TabContent from "./TabContent";
@@ -23,7 +23,7 @@ export default function Tabbed({ content }: Props) {
         <Tab num={3} activeTab={activeTab} onClick={setActiveTab} />
       </div>
 
-      {tabContent ? <TabContent item={tabContent} /> : <DifferentContent />}
+      {tabContent ? <TabContent item={tabContent} key={content.at(activeTab)?.summary} /> : <DifferentContent />}
     </div>
   );
 }

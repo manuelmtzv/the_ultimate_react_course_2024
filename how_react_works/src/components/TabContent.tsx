@@ -5,8 +5,19 @@ export default function TabContent({ item }: Props) {
   const [showDetails, setShowDetails] = useState(true);
   const [likes, setLikes] = useState(0);
 
-  function handleInc() {
-    setLikes(likes + 1);
+  function handleInc(likes: number = 1) {
+    setLikes(prev => prev + likes);
+  }
+
+  function handleUndo() {
+    setShowDetails(true);
+    setLikes(0);
+  }
+
+  function handleDelayedUndo(delay: number = 2000) {
+    setTimeout(() => {
+      handleUndo();
+    }, delay);
   }
 
   return (
@@ -21,14 +32,14 @@ export default function TabContent({ item }: Props) {
 
         <div className="hearts-counter">
           <span>{likes} ❤️</span>
-          <button onClick={handleInc}>+</button>
-          <button>+++</button>
+          <button onClick={() => handleInc()}>+</button>
+          <button onClick={() => handleInc(3)}>+++</button>
         </div>
       </div>
 
       <div className="tab-undo">
-        <button>Undo</button>
-        <button>Undo in 2s</button>
+        <button onClick={handleUndo}>Undo</button>
+        <button onClick={() => handleDelayedUndo()}>Undo in 2s</button>
       </div>
     </div>
   );
