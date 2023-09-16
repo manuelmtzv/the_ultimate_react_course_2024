@@ -1,27 +1,11 @@
 import PropTypes from "prop-types";
+import WatchedMovie from "./WatchedMovie";
 
-export default function WatchedList({ watchedMovies }) {
+export default function WatchedList({ watchedMovies, handleDeleteWatched }) {
   return (
     <ul className="list">
       {watchedMovies.map((movie) => (
-        <li key={movie.imdbID}>
-          <img src={movie.Poster} alt={`${movie.Title} poster`} />
-          <h3>{movie.Title}</h3>
-          <div>
-            <p>
-              <span>⭐️</span>
-              <span>{movie.imdbRating}</span>
-            </p>
-            <p>
-              <span>🌟</span>
-              <span>{movie.userRating}</span>
-            </p>
-            <p>
-              <span>⏳</span>
-              <span>{movie.runtime} min</span>
-            </p>
-          </div>
-        </li>
+        <WatchedMovie key={movie.imdbID} movie={movie} onDeleteWatched={handleDeleteWatched} />
       ))}
     </ul>
   );
@@ -29,4 +13,5 @@ export default function WatchedList({ watchedMovies }) {
 
 WatchedList.propTypes = {
   watchedMovies: PropTypes.array.isRequired,
+  handleDeleteWatched: PropTypes.func.isRequired,
 };

@@ -1,11 +1,19 @@
 import PropTypes from "prop-types";
 
 export default function WatcherStadistics({ watchedMovies }) {
-  const average = (arr) =>
-    arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
+  const average = (arr, fixed = undefined) => {
+    let result = arr.reduce((acc, cur, i, arr) => acc + cur / arr.
+      length, 0);
+    
+    if (fixed) { 
+      result = result.toFixed(fixed);
+    }
 
-  const avgImdbRating = average(watchedMovies.map((movie) => movie.imdbRating));
-  const avgUserRating = average(watchedMovies.map((movie) => movie.userRating));
+    return result;
+  }
+
+  const avgImdbRating = average(watchedMovies.map((movie) => movie.imdbRating), 2);
+  const avgUserRating = average(watchedMovies.map((movie) => movie.userRating), 2);
   const avgRuntime = average(watchedMovies.map((movie) => movie.runtime));
 
   return (

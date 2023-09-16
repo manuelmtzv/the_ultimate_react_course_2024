@@ -1,19 +1,11 @@
 import PropTypes from "prop-types";
+import Movie from "./Movie";
 
-export default function MovieList({ movies }) {
+export default function MovieList({ movies, handleSelectMovie }) {
   return (
-    <ul className="list">
+    <ul className="list list-movies">
       {movies?.map((movie) => (
-        <li key={movie.imdbID}>
-          <img src={movie.Poster} alt={`${movie.Title} poster`} />
-          <h3>{movie.Title}</h3>
-          <div>
-            <p>
-              <span>🗓</span>
-              <span>{movie.Year}</span>
-            </p>
-          </div>
-        </li>
+        <Movie key={movie.imdbID} movie={movie} onSelectMovie={handleSelectMovie} />
       ))}
     </ul>
   );
@@ -21,4 +13,5 @@ export default function MovieList({ movies }) {
 
 MovieList.propTypes = {
   movies: PropTypes.array.isRequired,
+  handleSelectMovie: PropTypes.func.isRequired,
 };
