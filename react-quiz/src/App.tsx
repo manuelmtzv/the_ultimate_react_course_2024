@@ -1,18 +1,32 @@
 import Header from "./components/Header";
 import Main from "./components/Main";
-
-// import { useQuestions } from "./hooks/useQuestions";
+import Loader from "./components/Loader";
+import Error from "./components/Error";
+import StartScreen from "./components/StartScreen";
+import Question from "./components/Question";
+import { useQuestions } from "./hooks/useQuestions";
 
 export default function App() {
-  // const { questions } = useQuestions();
+  const { questions, status, index, answer, dispatch } = useQuestions();
+  const questionAmount = questions.length;
 
   return (
-    <div className="App">
+    <div className="app">
       <Header />
 
       <Main>
-        <p>1/15</p>
-        <p>Question?</p>
+        {status === "loading" && <Loader />}
+        {status === "error" && <Error />}
+        {status == "ready" && (
+          <StartScreen questionAmount={questionAmount} dispatch={dispatch} />
+        )}
+        {status === "active" && (
+          <Question
+            question={questions[index]}
+            dispatch={dispatch}
+            answer={answer}
+          />
+        )}
       </Main>
     </div>
   );
