@@ -1,4 +1,4 @@
-export enum ApiStatus {
+export enum QuizStatus {
   Idle = "idle",
   Loading = "loading",
   Error = "error",

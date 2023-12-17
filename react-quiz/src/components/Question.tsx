@@ -1,5 +1,5 @@
-import { IAction } from "../hooks/useQuestions";
 import { IQuestion } from "../interfaces/question";
+import { ActionType } from "../hooks/useQuestions";
 import Options from "./Options";
 
 export default function Question({ question, answer, dispatch }: Props) {
@@ -13,6 +13,6 @@ export default function Question({ question, answer, dispatch }: Props) {
 
 interface Props {
   question: IQuestion;
-  dispatch: React.Dispatch<IAction>;
+  dispatch: React.Dispatch<ActionType>;
   answer?: number;
 }

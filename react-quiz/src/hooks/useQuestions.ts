@@ -1,68 +1,126 @@
 import { useEffect, useReducer } from "react";
 import { IQuestion } from "../interfaces/question";
-
-import { ApiStatus } from "../enums/apiStatus";
+import { QuizStatus } from "../enums/quizStatus";
+import questionService from "../services/questionService";
 
 interface IState {
   questions: IQuestion[];
   status: string;
   index: number;
+  points: number;
+  hightScore: number;
+  remainingTime?: number;
   answer?: number;
 }
 
+const TIME_PER_QUESTION = 30;
+
+const initialState: IState = {
+  questions: [],
+  status: QuizStatus.Idle,
+  index: 0,
+  points: 0,
+  hightScore: 0,
+  remainingTime: undefined,
+  answer: undefined,
+};
+
+type ActionWithPayload<Type extends string, Payload> = {
+  type: Type;
+  payload: Payload;
+};
+
+type SetQuestions = ActionWithPayload<"setQuestions", IQuestion[]>;
+type Loading = { type: "loading" };
+type DataFailed = { type: "dataFailed" };
+type Start = { type: "start" };
+type SetAnswer = ActionWithPayload<"setAnswer", number>;
+type NextQuestion = { type: "nextQuestion" };
+type Finish = { type: "finish" };
+type Restart = { type: "restart" };
+type Tick = { type: "tick" };
+
 export type ActionType =
-  | "setQuestions"
-  | "setStatus"
-  | "setIndex"
-  | "setAnswer";
+  | SetQuestions
+  | Loading
+  | DataFailed
+  | Start
+  | SetAnswer
+  | NextQuestion
+  | Finish
+  | Restart
+  | Tick;
 
-export interface IAction<T = unknown> {
-  type: ActionType;
-  payload: T;
-}
-
-const reducer = (state: IState, action: IAction) => {
+const reducer = (state: IState, action: ActionType) => {
   switch (action.type) {
     case "setQuestions":
-      return { ...state, questions: action.payload as IQuestion[] };
-    case "setStatus":
-      return { ...state, status: action.payload as string };
-    case "setIndex":
-      return { ...state, index: action.payload as number };
+      return { ...state, status: QuizStatus.Ready, questions: action.payload };
+    case "loading":
+      return { ...state, status: QuizStatus.Loading };
+    case "dataFailed":
+      return { ...state, status: QuizStatus.Error };
+    case "start":
+      return {
+        ...state,
+        status: QuizStatus.Active,
+        remainingTime: state.questions.length * TIME_PER_QUESTION,
+      };
     case "setAnswer":
-      return { ...state, answer: action.payload as number };
+      const question = state.questions[state.index];
+      return {
+        ...state,
+        answer: action.payload,
+        points:
+          action.payload == question.correctOption
+            ? state.points + question.points
+            : state.points,
+      };
+    case "nextQuestion":
+      return {
+        ...state,
+        index: state.index + 1,
+        answer: undefined,
+      };
+    case "finish":
+      return {
+        ...state,
+        status: QuizStatus.Finished,
+        hightScore: Math.max(state.points, state.hightScore),
+      };
+    case "restart":
+      return {
+        ...initialState,
+        status: QuizStatus.Ready,
+        questions: state.questions,
+        hightScore: state.hightScore,
+      };
+    case "tick":
+      const newRemainingTime = (state.remainingTime ?? 0) - 1;
+      return {
+        ...state,
+        remainingTime: newRemainingTime,
+        status: newRemainingTime <= 0 ? QuizStatus.Finished : state.status,
+      };
     default:
       return state;
   }
 };
 
-const getQuestions = async () => {
-  const response = await fetch("http://localhost:3001/questions");
-  const data = await response.json();
-
-  await new Promise((resolve) => setTimeout(resolve, 1000));
-
-  return data;
-};
-
 export function useQuestions() {
-  const [state, dispatch] = useReducer(reducer, {
-    questions: [],
-    status: ApiStatus.Idle,
-    index: 0,
-  });
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
-    dispatch({ type: "setStatus", payload: ApiStatus.Loading });
+    dispatch({ type: "loading" });
 
-    getQuestions()
+    questionService
+      .getQuestions()
       .then((data) => {
         dispatch({ type: "setQuestions", payload: data });
-        dispatch({ type: "setStatus", payload: ApiStatus.Ready });
+        dispatch({ type: "start" });
       })
       .catch((error) => {
         console.log(error);
-        dispatch({ type: "setStatus", payload: ApiStatus.Error });
+        dispatch({ type: "dataFailed" });
       });
   }, []);
 
