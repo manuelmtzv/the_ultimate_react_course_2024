@@ -1,10 +1,12 @@
-import AppNavigation from "../../components/AppNavigation";
+import styles from "./AppView.module.css";
+import Sidebar from "../../components/Sidebar";
+import Map from "../../components/Map";
 
 export default function AppView() {
   return (
-    <div>
-      <AppNavigation />
-      <h1>AppView</h1>
+    <div className={styles.app}>
+      <Sidebar />
+      <Map />
     </div>
   );
 }
