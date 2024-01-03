@@ -1,30 +1,23 @@
 import styles from "./CountryList.module.css";
 import Spinner from "../Spinner";
-import CityEntry from "../CityEntry";
+import CountryEntry from "../CountryEntry";
 import Message from "../Message";
 import { City } from "@/interfaces/city";
-import { objectOmit } from "@vueuse/core";
+import { useCountries } from "../../hooks/useCountries";
 
 export default function CountryList({ cities, isLoading }: Props) {
-  if (isLoading) return <Spinner />;
+  const { countries } = useCountries(cities);
+  if (isLoading) return <Spinner />;  
 
-  if (!cities.length && !isLoading)
+  if (!countries.length && !isLoading)
     return (
       <Message message="Add your first city by clicking on a country on the map" />
     );
 
-  const countries = cities.reduce((acc, cur) => {
-    if (acc.map(el => el.city).includes(cur.country)) {
-      return acc;
-    } else {
-      return [...acc, cur];
-    }
-  }, [])
-
   return (
     <ul className={styles.countryList}>
-      {cities.map((city) => {
-        return <CityEntry key={city.id} city={city} />;
+      {countries.map((country) => {
+        return <CountryEntry key={country.id} country={country} />;
       })}
     </ul>
   );

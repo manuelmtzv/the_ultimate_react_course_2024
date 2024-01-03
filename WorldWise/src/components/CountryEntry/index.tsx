@@ -1,5 +1,5 @@
-import { Country } from "../../interfaces/country";
-import styles from "./CountryItem.module.css";
+import styles from "./CountryEntry.module.css";
+import { Country } from "@/interfaces/country";
 
 export default function CountryItem({ country }: Props) {
   return (

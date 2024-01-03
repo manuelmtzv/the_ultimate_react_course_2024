@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import {
   HomeView,
   ProductView,
@@ -8,8 +8,10 @@ import {
   LoginView,
 } from "./views";
 import CityList from "./components/CityList";
-import { useCities } from "./hooks/useCities";
 import CountryList from "./components/CountryList";
+import City from "./components/City";
+import { useCities } from "./hooks/useCities";
+import Form from "./components/Form";
 
 function App() {
   const { cities, loading } = useCities();
@@ -22,6 +24,7 @@ function App() {
         <Route path="pricing" element={<PricingView />} />
         <Route path="login" element={<LoginView />} />
         <Route path="app" element={<AppView />}>
+          <Route index element={<Navigate replace to="cities" />} />
           <Route
             index
             element={<CityList cities={cities} isLoading={loading} />}
@@ -30,11 +33,12 @@ function App() {
             path="cities"
             element={<CityList cities={cities} isLoading={loading} />}
           />
+          <Route path="cities/:id" element={<City />} />
           <Route
             path="countries"
             element={<CountryList cities={cities} isLoading={loading} />}
           />
-          <Route path="form" element={<div>Form</div>} />
+          <Route path="form" element={<Form />} />
         </Route>
 
         <Route path="*" element={<NotFoundView />} />
