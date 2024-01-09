@@ -1,13 +1,12 @@
-interface Props {
-  searchQuery: string;
-  setSearchQuery: (query: string) => void;
-}
+import { usePostContext } from "../hooks/usePostContext";
 
-export default function SearchPosts({ searchQuery, setSearchQuery }: Props) {
+export default function SearchPosts() {
+  const { searchQuery, onSetSearchQuery } = usePostContext();
+
   return (
     <input
       value={searchQuery}
-      onChange={(e) => setSearchQuery(e.target.value)}
+      onChange={(e) => onSetSearchQuery(e.target.value)}
       placeholder="Search posts..."
     />
   );

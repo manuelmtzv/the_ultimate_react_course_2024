@@ -1,11 +1,8 @@
 import { FormEvent, useState } from "react";
-import { Post } from "../types/Post";
+import { usePostContext } from "../hooks/usePostContext";
 
-interface Props {
-  onAddPost: (post: Post) => void;
-}
-
-export default function AddPostForm({ onAddPost }: Props) {
+export default function AddPostForm() {
+  const { onAddPost } = usePostContext();
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
 

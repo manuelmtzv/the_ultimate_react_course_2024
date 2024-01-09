@@ -1,10 +1,8 @@
-import { Post } from "../types/Post";
+import { usePostContext } from "../hooks/usePostContext";
 
-interface Props {
-  posts: Post[];
-}
+export default function List() {
+  const { posts } = usePostContext();
 
-export default function List({ posts }: Props) {
   return (
     <ul>
       {posts.map((post, i) => (
