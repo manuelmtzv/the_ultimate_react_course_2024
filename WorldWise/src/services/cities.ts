@@ -6,4 +6,8 @@ export default {
     const response = await serverApi.get<City[]>("/cities");
     return response;
   },
+  getCity: async (id: string) => {
+    const response = await serverApi.get<City>(`/cities/${id}`);
+    return response;
+  },
 };

@@ -1,17 +1,24 @@
 import { type ActionWithPayload } from "@/types/generalTypes";
 import { type City } from "@/interfaces/city";
 
-export type UseCitiesState = {
+export type CitiesContextState = {
   cities: City[];
   loading: boolean;
   error: boolean;
+  currentCity?: City;
+  setCity: (id: string) => Promise<void>;
 };
 
-export type LoadingCitiesAction = { type: "LOADING_CITIES" };
-export type ErrorCitiesAction = ActionWithPayload<"ERROR_CITIES", boolean>;
+export type LoadingAction = { type: "SET_LOADING" };
+export type ErrorCitiesAction = ActionWithPayload<"SET_ERROR", boolean>;
 export type SuccessCitiesAction = ActionWithPayload<"SUCCESS_CITIES", City[]>;
+export type SetCurrentCityAction = ActionWithPayload<
+  "SET_CURRENT_CITY",
+  City | undefined
+>;
 
-export type ActionTypes =
-  | LoadingCitiesAction
+export type CitiesActionTypes =
+  | LoadingAction
   | ErrorCitiesAction
-  | SuccessCitiesAction;
+  | SuccessCitiesAction
+  | SetCurrentCityAction;

@@ -2,14 +2,16 @@ import styles from "./CountryList.module.css";
 import Spinner from "../Spinner";
 import CountryEntry from "../CountryEntry";
 import Message from "../Message";
-import { City } from "@/interfaces/city";
 import { useCountries } from "../../hooks/useCountries";
+import { useCitiesContext } from "../../hooks/useCitiesContext";
 
-export default function CountryList({ cities, isLoading }: Props) {
+export default function CountryList() {
+  const { cities, loading } = useCitiesContext();
+
   const { countries } = useCountries(cities);
-  if (isLoading) return <Spinner />;  
+  if (loading) return <Spinner />;
 
-  if (!countries.length && !isLoading)
+  if (!countries.length && !loading)
     return (
       <Message message="Add your first city by clicking on a country on the map" />
     );
@@ -21,9 +23,4 @@ export default function CountryList({ cities, isLoading }: Props) {
       })}
     </ul>
   );
-}
-
-interface Props {
-  cities: City[];
-  isLoading: boolean;
 }
