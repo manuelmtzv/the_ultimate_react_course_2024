@@ -1,28 +1,34 @@
 import styles from "./Map.module.css";
 import { useSearchParams, useNavigate } from "react-router-dom";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import { useState } from "react";
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  Popup,
+  useMap,
+  useMapEvents,
+} from "react-leaflet";
+import { useEffect, useState } from "react";
 import { LatLngExpression } from "leaflet";
-import { useCitiesContext } from "../../hooks/useCitiesContext";
+import { useCitiesContext } from "../../contexts/CitiesContext";
 
 export default function Map() {
-  const navigate = useNavigate();
   const { cities } = useCitiesContext();
-  const [mapPosition] = useState<LatLngExpression>([40, 0]);
-  // const [searchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
+  const [mapPosition, setMapPosition] = useState<LatLngExpression>([40, 0]);
 
-  // const lat = searchParams.get("lat");
-  // const lng = searchParams.get("lng");
+  const lat = Number(searchParams.get("lat") ?? 0);
+  const lng = Number(searchParams.get("lng") ?? 0);
 
-  const moveToForm = () => {
-    navigate("form");
-  };
+  useEffect(() => {
+    if (lat && lng) setMapPosition([lat, lng]);
+  }, [lat, lng]);
 
   return (
-    <div className={styles.mapContainer} onClick={moveToForm}>
+    <div className={styles.mapContainer}>
       <MapContainer
         center={mapPosition}
-        zoom={13}
+        zoom={6}
         scrollWheelZoom={true}
         className={styles.map}
       >
@@ -43,7 +49,32 @@ export default function Map() {
             </Marker>
           );
         })}
+
+        <ChangeCenter position={mapPosition} />
+        <DetectClick />
       </MapContainer>
     </div>
   );
+}
+
+type ChangeCenterProps = {
+  position: LatLngExpression;
+};
+
+function ChangeCenter({ position }: ChangeCenterProps) {
+  const map = useMap();
+  map.setView(position);
+  return null;
+}
+
+function DetectClick() {
+  const navigate = useNavigate();
+
+  useMapEvents({
+    click: (e) => {
+      const { lat, lng } = e.latlng;
+      navigate(`form?lat=${lat}&lng=${lng}`);
+    },
+  });
+  return null;
 }

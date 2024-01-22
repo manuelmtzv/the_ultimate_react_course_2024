@@ -3,15 +3,15 @@ import Spinner from "../Spinner";
 import CountryEntry from "../CountryEntry";
 import Message from "../Message";
 import { useCountries } from "../../hooks/useCountries";
-import { useCitiesContext } from "../../hooks/useCitiesContext";
+import { useCitiesContext } from "../../contexts/CitiesContext";
 
 export default function CountryList() {
-  const { cities, loading } = useCitiesContext();
+  const { cities, isLoading } = useCitiesContext();
 
   const { countries } = useCountries(cities);
-  if (loading) return <Spinner />;
+  if (isLoading) return <Spinner />;
 
-  if (!countries.length && !loading)
+  if (!countries.length && !isLoading)
     return (
       <Message message="Add your first city by clicking on a country on the map" />
     );

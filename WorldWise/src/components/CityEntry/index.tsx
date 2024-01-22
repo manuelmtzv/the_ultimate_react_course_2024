@@ -2,7 +2,7 @@ import styles from "./CityEntry.module.css";
 import { City } from "@/interfaces/city";
 import { formatDate } from "../../utils/formatDate";
 import { Link } from "react-router-dom";
-import { useCitiesContext } from "../../hooks/useCitiesContext";
+import { useCitiesContext } from "../../contexts/CitiesContext";
 
 export default function CityEntry({ city }: Props) {
   const { currentCity } = useCitiesContext();

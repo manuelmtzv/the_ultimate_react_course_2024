@@ -3,22 +3,22 @@ import { type City } from "@/interfaces/city";
 
 export type CitiesContextState = {
   cities: City[];
-  loading: boolean;
-  error: boolean;
+  isLoading: boolean;
+  error: string;
   currentCity?: City;
-  setCity: (id: string) => Promise<void>;
+  getCity: (id: string) => Promise<void>;
 };
 
-export type LoadingAction = { type: "SET_LOADING" };
-export type ErrorCitiesAction = ActionWithPayload<"SET_ERROR", boolean>;
-export type SuccessCitiesAction = ActionWithPayload<"SUCCESS_CITIES", City[]>;
-export type SetCurrentCityAction = ActionWithPayload<
-  "SET_CURRENT_CITY",
+export type LoadingAction = { type: "loading" };
+export type CitiesLoadedAction = ActionWithPayload<"cities/loaded", City[]>;
+export type CityLoadedAction = ActionWithPayload<
+  "city/loaded",
   City | undefined
 >;
+export type RejectedAction = ActionWithPayload<"rejected", string>;
 
-export type CitiesActionTypes =
+export type CitiesContextActionTypes =
   | LoadingAction
-  | ErrorCitiesAction
-  | SuccessCitiesAction
-  | SetCurrentCityAction;
+  | CitiesLoadedAction
+  | CityLoadedAction
+  | RejectedAction;

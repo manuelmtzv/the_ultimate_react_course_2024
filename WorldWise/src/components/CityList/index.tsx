@@ -2,14 +2,14 @@ import styles from "./CityList.module.css";
 import Spinner from "../Spinner";
 import CityEntry from "../CityEntry";
 import Message from "../Message";
-import { useCitiesContext } from "../../hooks/useCitiesContext";
+import { useCitiesContext } from "../../contexts/CitiesContext";
 
 export default function CityList() {
-  const { cities, loading } = useCitiesContext();
+  const { cities, isLoading } = useCitiesContext();
 
-  if (loading) return <Spinner />;
+  if (isLoading) return <Spinner />;
 
-  if (!cities.length && !loading)
+  if (!cities.length && !isLoading)
     return (
       <Message message="Add your first city by clicking on a city on the map" />
     );
