@@ -3,6 +3,7 @@ import { City } from "@/interfaces/city";
 import { formatDate } from "../../utils/formatDate";
 import { Link } from "react-router-dom";
 import { useCitiesContext } from "../../contexts/CitiesContext";
+import FlagEmojiToImg from "../FlagEmojiToImg";
 
 export default function CityEntry({ city }: Props) {
   const { currentCity } = useCitiesContext();
@@ -16,7 +17,7 @@ export default function CityEntry({ city }: Props) {
           id == currentCity?.id ? styles["cityEntry--active"] : ""
         }`}
       >
-        <span className={styles.emoji}>{emoji}</span>
+        <span className={styles.emoji}>{emoji && FlagEmojiToImg(emoji)}</span>
         <h3 className={styles.name}>{cityName}</h3>
         <time className={styles.name}>{formatDate(date)}</time>
 
