@@ -1,4 +1,4 @@
-import { ActionType } from "../hooks/useQuiz";
+import { ActionType } from "../hooks/useQuestions";
 import { IQuestion } from "../interfaces/question";
 
 export default function Options({ question, answer, dispatch }: Props) {

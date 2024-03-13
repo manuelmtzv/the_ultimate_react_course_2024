@@ -1,7 +1,4 @@
-import { useQuizContext } from "@/hooks/useQuizContext";
-
-export default function FinishScreen() {
-  const { points, maxPoints, hightScore } = useQuizContext();
+export default function FinishScreen({ points, maxPoints, hightscore }: Props) {
   const percentage = Math.ceil((points / maxPoints) * 100);
 
   return (
@@ -11,7 +8,13 @@ export default function FinishScreen() {
         {percentage}%)
       </p>
 
-      <p className="highscore">(Hightscore: {hightScore} points)</p>
+      <p className="highscore">(Hightscore: {hightscore} points)</p>
     </>
   );
+}
+
+interface Props {
+  points: number;
+  maxPoints: number;
+  hightscore: number;
 }

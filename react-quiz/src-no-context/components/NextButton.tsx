@@ -1,15 +1,17 @@
-import { useQuizContext } from "@/hooks/useQuizContext";
+import { ActionType } from "../hooks/useQuestions";
 
-export default function NextButton() {
-  const { index, questionAmount, answer, quizContextDispatch } =
-    useQuizContext();
-
+export default function NextButton({
+  index,
+  questionAmount,
+  dispatch,
+  answer,
+}: Props) {
   function nextQuestionHandler() {
-    quizContextDispatch({ type: "nextQuestion" });
+    dispatch({ type: "nextQuestion" });
   }
 
   function finishHandler() {
-    quizContextDispatch({ type: "finish" });
+    dispatch({ type: "finish" });
   }
 
   if (answer === undefined) return null;
@@ -27,4 +29,11 @@ export default function NextButton() {
         Finish
       </button>
     );
+}
+
+interface Props {
+  index: number;
+  questionAmount: number;
+  dispatch: React.Dispatch<ActionType>;
+  answer?: number;
 }

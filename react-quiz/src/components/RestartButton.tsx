@@ -1,8 +1,10 @@
-import { ActionType } from "../hooks/useQuestions";
+import { useQuizContext } from "@/hooks/useQuizContext";
 
-export default function RestartButton({ dispatch }: Props) {
+export default function RestartButton() {
+  const { quizContextDispatch } = useQuizContext();
+
   function restartHandler() {
-    dispatch({ type: "restart" });
+    quizContextDispatch({ type: "restart" });
   }
 
   return (
@@ -10,8 +12,4 @@ export default function RestartButton({ dispatch }: Props) {
       Restart
     </button>
   );
-}
-
-interface Props {
-  dispatch: React.Dispatch<ActionType>;
 }

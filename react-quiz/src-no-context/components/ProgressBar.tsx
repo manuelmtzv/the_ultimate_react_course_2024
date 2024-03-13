@@ -1,9 +1,12 @@
-import { useQuizContext } from "@/hooks/useQuizContext";
-
-export default function ProgressBar() {
-  const { index, questionAmount, points, maxPoints, answer } = useQuizContext();
-  const questionNumber = index + 1;
+export default function ProgressBar({
+  index,
+  questionAmount,
+  points,
+  maxPoints,
+  answer,
+}: Props) {
   const progress = index + Number(answer !== undefined);
+  const questionNumber = index + 1;
 
   return (
     <header className="progress">
@@ -18,4 +21,12 @@ export default function ProgressBar() {
       </p>
     </header>
   );
+}
+
+interface Props {
+  index: number;
+  questionAmount: number;
+  points: number;
+  maxPoints: number;
+  answer?: number;
 }

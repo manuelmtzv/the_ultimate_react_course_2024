@@ -1,6 +1,8 @@
-import { IAction } from "../hooks/useQuestions";
+import { useQuizContext } from "@/hooks/useQuizContext";
 
-export default function StartScreen({ questionAmount, dispatch }: Props) {
+export default function StartScreen() {
+  const { quizContextDispatch, questionAmount } = useQuizContext();
+
   return (
     <div className="start">
       <h2>Welcome to The React Quiz!</h2>
@@ -8,15 +10,10 @@ export default function StartScreen({ questionAmount, dispatch }: Props) {
 
       <button
         className="btn btn-ui"
-        onClick={() => dispatch({ type: "setStatus", payload: "active" })}
+        onClick={() => quizContextDispatch({ type: "start" })}
       >
         Let's start
       </button>
     </div>
   );
-}
-
-interface Props {
-  questionAmount: number;
-  dispatch: React.Dispatch<IAction>;
 }
