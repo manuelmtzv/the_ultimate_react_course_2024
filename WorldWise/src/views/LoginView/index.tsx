@@ -1,16 +1,40 @@
-import PageNavigation from "../../components/PageNavigation";
+import PageNavigation from "@/components/PageNavigation";
 import styles from "./LoginView.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useAuthContext } from "@/hooks/useAuthContext";
+import { useNavigate } from "react-router-dom";
+import Button from "@/components/Button";
 
 export default function LoginView() {
-  const [email, setEmail] = useState("jack@example.com");
-  const [password, setPassword] = useState("qwerty");
+  const [email, setEmail] = useState("email@email.com");
+  const [password, setPassword] = useState("password");
+  const { login, isAuthenticated, isLoading } = useAuthContext();
+  const navigate = useNavigate();
+
+  function handleLogin(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    if (email && password) {
+      login({ email, password });
+    }
+  }
+
+  useEffect(
+    function () {
+      if (isAuthenticated) {
+        navigate("/app", {
+          replace: true,
+        });
+      }
+    },
+    [isAuthenticated, navigate]
+  );
 
   return (
     <main className={styles.login}>
       <PageNavigation />
 
-      <form className={styles.form}>
+      <form className={styles.form} onSubmit={handleLogin}>
         <div className={styles.row}>
           <label htmlFor="email">Email address</label>
           <input
@@ -32,7 +56,9 @@ export default function LoginView() {
         </div>
 
         <div>
-          <button>Login</button>
+          <Button buttonType="primary" isLoading={isLoading}>
+            Login
+          </Button>
         </div>
       </form>
     </main>

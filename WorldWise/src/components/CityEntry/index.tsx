@@ -2,12 +2,17 @@ import styles from "./CityEntry.module.css";
 import { City } from "@/interfaces/city";
 import { formatDate } from "../../utils/formatDate";
 import { Link } from "react-router-dom";
-import { useCitiesContext } from "../../contexts/CitiesContext";
+import { useCitiesContext } from "@/hooks/useCitiesContext";
 import FlagEmojiToImg from "../FlagEmojiToImg";
 
 export default function CityEntry({ city }: Props) {
-  const { currentCity } = useCitiesContext();
+  const { currentCity, deleteCity } = useCitiesContext();
   const { cityName, emoji, date, id, position } = city;
+
+  function handleDelete(e: React.MouseEvent<HTMLButtonElement>) {
+    e.preventDefault();
+    deleteCity(id);
+  }
 
   return (
     <li>
@@ -21,7 +26,9 @@ export default function CityEntry({ city }: Props) {
         <h3 className={styles.name}>{cityName}</h3>
         <time className={styles.name}>{formatDate(date)}</time>
 
-        <button className={styles.deleteBtn}>&times;</button>
+        <button onClick={handleDelete} className={styles.deleteBtn}>
+          &times;
+        </button>
       </Link>
     </li>
   );

@@ -5,14 +5,22 @@ import styles from "./Button.module.css";
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   buttonType: ButtonType;
   children?: ReactNode;
+  isLoading?: boolean;
 }
 
-function Button({ buttonType, children, ...rest }: Props): ReactElement {
+function Button({
+  buttonType,
+  children,
+  isLoading,
+  ...rest
+}: Props): ReactElement {
   const className = `${styles.btn} ${styles[buttonType]}`;
 
   return (
     <button className={className} {...rest}>
       {children}
+
+      {isLoading && <div className={styles.loadingSpinner} />}
     </button>
   );
 }

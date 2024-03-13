@@ -10,7 +10,7 @@ import {
 } from "react-leaflet";
 import { useEffect, useState } from "react";
 import { LatLngExpression } from "leaflet";
-import { useCitiesContext } from "@contexts/CitiesContext";
+import { useCitiesContext } from "@/hooks/useCitiesContext";
 import { useGeolocation } from "@hooks/useGeolocation";
 import Button from "@components/Button";
 import { useUrlPosition } from "@hooks/useUrlPosition";
@@ -27,7 +27,7 @@ export default function Map() {
   const { lat, lng } = useUrlPosition();
 
   useEffect(() => {
-    if (lat && lng) setMapPosition([lat, lng]);
+    if (lat && lng) setMapPosition([+lat, +lng]);
   }, [lat, lng]);
 
   useEffect(() => {

@@ -6,5 +6,5 @@ export const useUrlPosition = () => {
   const lat = searchParams.get("lat") ?? undefined;
   const lng = searchParams.get("lng") ?? undefined;
 
-  return { lat, lng };
+  return { lat: Number(lat), lng: Number(lng) };
 };

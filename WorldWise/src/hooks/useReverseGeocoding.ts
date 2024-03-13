@@ -3,8 +3,8 @@ import { ReverseGeocodingResponse } from "@/types/reverseGeocoding";
 import { useEffect, useState } from "react";
 
 type ReverseGeocodingHookProps = {
-  lat?: string;
-  lng?: string;
+  lat?: number;
+  lng?: number;
 };
 
 export const useReverseGeocoding = ({

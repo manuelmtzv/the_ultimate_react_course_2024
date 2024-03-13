@@ -1,16 +1,11 @@
-import {
-  createContext,
-  useEffect,
-  useContext,
-  useReducer,
-  useCallback,
-} from "react";
+import { createContext, useEffect, useReducer, useCallback } from "react";
 import {
   CitiesContextActionTypes,
   CitiesContextState,
 } from "@/types/citiesTypes";
+import { CreateCity } from "@/interfaces/city";
+import { default as cityServices } from "@/services/city";
 
-const BASE_URL = "http://localhost:8001";
 export const CitiesContext = createContext<CitiesContextState | null>(null);
 
 const initialState: CitiesContextState = {
@@ -19,6 +14,8 @@ const initialState: CitiesContextState = {
   error: "",
   currentCity: undefined,
   getCity: async () => await Promise.resolve(),
+  createCity: async () => await Promise.resolve(),
+  deleteCity: async () => await Promise.resolve(),
 };
 
 function reducer(
@@ -34,6 +31,22 @@ function reducer(
         ...state,
         isLoading: false,
         cities: action.payload,
+      };
+
+    case "city/created":
+      return {
+        ...state,
+        isLoading: false,
+        cities: [...state.cities, action.payload],
+        currentCity: action.payload,
+      };
+
+    case "city/deleted":
+      return {
+        ...state,
+        isLoading: false,
+        cities: state.cities.filter((city) => city.id !== action.payload),
+        currentCity: undefined,
       };
 
     case "city/loaded":
@@ -52,7 +65,7 @@ type CitiesProviderProps = {
   children: React.ReactNode;
 };
 
-function CitiesProvider({ children }: CitiesProviderProps) {
+export function CitiesProvider({ children }: CitiesProviderProps) {
   const [{ cities, isLoading, currentCity, error }, dispatch] = useReducer(
     reducer,
     initialState
@@ -63,8 +76,7 @@ function CitiesProvider({ children }: CitiesProviderProps) {
       dispatch({ type: "loading" });
 
       try {
-        const res = await fetch(`${BASE_URL}/cities`);
-        const data = await res.json();
+        const { data } = await cityServices.getCities();
         dispatch({ type: "cities/loaded", payload: data });
       } catch {
         dispatch({
@@ -83,8 +95,7 @@ function CitiesProvider({ children }: CitiesProviderProps) {
       dispatch({ type: "loading" });
 
       try {
-        const res = await fetch(`${BASE_URL}/cities/${id}`);
-        const data = await res.json();
+        const { data } = await cityServices.getCity(id);
         dispatch({ type: "city/loaded", payload: data });
       } catch {
         dispatch({
@@ -96,6 +107,38 @@ function CitiesProvider({ children }: CitiesProviderProps) {
     [currentCity?.id]
   );
 
+  const createCity = useCallback(async function createCity(city: CreateCity) {
+    dispatch({ type: "loading" });
+
+    try {
+      const { data } = await cityServices.createCity(city);
+      dispatch({ type: "city/created", payload: data });
+      console.log("City created!", data);
+    } catch {
+      dispatch({
+        type: "rejected",
+        payload: "There was an error creating the city...",
+      });
+    }
+  }, []);
+
+  const deleteCity = useCallback(async function deleteCity(
+    id: string | number
+  ) {
+    dispatch({ type: "loading" });
+
+    try {
+      await cityServices.deleteCity(id);
+      dispatch({ type: "city/deleted", payload: id });
+    } catch {
+      dispatch({
+        type: "rejected",
+        payload: "There was an error deleting the city...",
+      });
+    }
+  },
+  []);
+
   return (
     <CitiesContext.Provider
       value={{
@@ -104,18 +147,11 @@ function CitiesProvider({ children }: CitiesProviderProps) {
         currentCity,
         error,
         getCity,
+        createCity,
+        deleteCity,
       }}
     >
       {children}
     </CitiesContext.Provider>
   );
 }
-
-function useCitiesContext() {
-  const context = useContext(CitiesContext);
-  if (!context)
-    throw new Error("CitiesContext was used outside the CitiesProvider");
-  return context;
-}
-
-export { CitiesProvider, useCitiesContext };

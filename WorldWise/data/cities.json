@@ -25,28 +25,28 @@
       "id": 17806751
     },
     {
-      "cityName": "Madrid",
-      "country": "Spain",
-      "emoji": "🇪🇸",
-      "date": "2027-07-15T08:22:53.976Z",
+      "cityName": "San Antonio",
+      "country": "United States of America (the)",
+      "date": "2024-02-29T00:15:15.774Z",
       "notes": "",
       "position": {
-        "lat": 40.46635901755316,
-        "lng": -3.7133789062500004
+        "lat": 29.506549442788593,
+        "lng": -98.28369140625001
       },
-      "id": 17806752
+      "emoji": "🇺🇸",
+      "id": 73930386
     },
     {
-      "cityName": "Berlin",
-      "country": "Germany",
-      "emoji": "🇩🇪",
-      "date": "2027-02-12T09:24:11.863Z",
-      "notes": "Amazing 😃",
+      "cityName": "Artesa de Segre",
+      "country": "Spain",
+      "date": "2024-02-29T00:24:27.751Z",
+      "notes": "",
       "position": {
-        "lat": 52.53586782505711,
-        "lng": 13.376933665713324
+        "lat": 41.934976500546604,
+        "lng": 1.0766601562500002
       },
-      "id": 98443197
+      "emoji": "🇪🇸",
+      "id": 73930387
     }
   ]
 }

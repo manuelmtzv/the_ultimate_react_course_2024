@@ -7,6 +7,10 @@
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  display: flex;
+  jusfity-content: center;
+  align-items: center;
+  gap: 0.8rem;
 }
 
 .primary {
@@ -32,4 +36,19 @@
   background-color: var(--color-brand--2);
   color: var(--color-dark--1);
   box-shadow: 0 0.4rem 1.2rem rgba(36, 42, 46, 0.16);
+}
+
+.loadingSpinner {
+  width: 1.8rem;
+  height: 1.8rem;
+  border-radius: 50%;
+  background: conic-gradient(#0000 10%, var(--color-light--2));
+  -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 8px), #000 0);
+  animation: rotate 1.5s infinite linear;
+}
+
+@keyframes rotate {
+  to {
+    transform: rotate(1turn);
+  }
 }

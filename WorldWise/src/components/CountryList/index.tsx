@@ -3,7 +3,7 @@ import Spinner from "../Spinner";
 import CountryEntry from "../CountryEntry";
 import Message from "../Message";
 import { useCountries } from "../../hooks/useCountries";
-import { useCitiesContext } from "../../contexts/CitiesContext";
+import { useCitiesContext } from "@/hooks/useCitiesContext";
 
 export default function CountryList() {
   const { cities, isLoading } = useCitiesContext();
