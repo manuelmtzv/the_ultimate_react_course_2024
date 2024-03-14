@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
-
 import Header from "./components/Header";
 import Main from "./components/Main";
 import Archive from "./components/Archive";
 import Footer from "./components/Footer";
 
 // Contexts
-import { PostProvider } from "./contexts/PostContext";
+import { PostContextProvider } from "./contexts/PostContext";
 
 function App() {
   const [isFakeDark, setIsFakeDark] = useState(false);
@@ -27,13 +26,12 @@ function App() {
         {isFakeDark ? "☀️" : "🌙"}
       </button>
 
-      <PostProvider>
+      <PostContextProvider>
         <Header />
         <Main />
         <Archive />
-      </PostProvider>
-
-      <Footer />
+        <Footer />
+      </PostContextProvider>
     </section>
   );
 }

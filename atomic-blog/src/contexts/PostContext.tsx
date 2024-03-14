@@ -1,4 +1,4 @@
-import { ReactNode, createContext } from "react";
+import { ReactNode, createContext, useMemo } from "react";
 import { PostContextProps } from "../types/PostContextProps";
 import { usePosts } from "../hooks/usePosts";
 
@@ -12,28 +12,20 @@ const defaultState: PostContextProps = {
 
 const PostContext = createContext<PostContextProps>(defaultState);
 
-function PostProvider({ children }: { children: ReactNode }) {
-  const {
-    searchQuery,
-    searchedPosts,
-    handleAddPost,
-    handleClearPosts,
-    setSearchQuery,
-  } = usePosts();
+function PostContextProvider({ children }: { children: ReactNode }) {
+  const value = usePosts();
 
-  return (
-    <PostContext.Provider
-      value={{
-        posts: searchedPosts,
-        searchQuery,
-        onAddPost: handleAddPost,
-        onClearPosts: handleClearPosts,
-        onSetSearchQuery: setSearchQuery,
-      }}
-    >
-      {children}
-    </PostContext.Provider>
-  );
+  const state = useMemo(() => {
+    return {
+      ...value,
+      posts: value.searchedPosts,
+      onAddPost: value.handleAddPost,
+      onClearPosts: value.handleClearPosts,
+      onSetSearchQuery: value.setSearchQuery,
+    };
+  }, [value]);
+
+  return <PostContext.Provider value={state}>{children}</PostContext.Provider>;
 }
 
-export { PostContext, PostProvider };
+export { PostContext, PostContextProvider };

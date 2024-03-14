@@ -1,13 +1,11 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { createRandomPost } from "../utils/createRandomPost";
-import { usePostContext } from "../hooks/usePostContext";
+import ArchiveList from "./ArchiveList";
 
 export default function Archive() {
-  const { onAddPost } = usePostContext();
-
-  const [posts] = useState(() =>
-    Array.from({ length: 10000 }, () => createRandomPost())
-  );
+  const posts = useMemo(() => {
+    return Array.from({ length: 10000 }, () => createRandomPost());
+  }, []);
 
   const [showArchive, setShowArchive] = useState(false);
 
@@ -18,18 +16,7 @@ export default function Archive() {
         {showArchive ? "Hide archive posts" : "Show archive posts"}
       </button>
 
-      {showArchive && (
-        <ul>
-          {posts.map((post, i) => (
-            <li key={i}>
-              <p>
-                <strong>{post.title}:</strong> {post.body}
-              </p>
-              <button onClick={() => onAddPost(post)}>Add as new post</button>
-            </li>
-          ))}
-        </ul>
-      )}
+      {showArchive && <ArchiveList posts={posts} />}
     </aside>
   );
 }
