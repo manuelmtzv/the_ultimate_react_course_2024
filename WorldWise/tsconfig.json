@@ -20,7 +20,8 @@
       "@components/*": ["src/components/*"],
       "@hooks/*": ["src/hooks/*"],
       "@helpers/*": ["src/helpers/*"],
-      "@services/*": ["src/services/*"]
+      "@services/*": ["src/services/*"],
+      "@views/*": ["src/views/*"]
     },
     "types": ["node"],
 

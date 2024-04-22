@@ -65,7 +65,7 @@ type CitiesProviderProps = {
   children: React.ReactNode;
 };
 
-export function CitiesProvider({ children }: CitiesProviderProps) {
+export default function CitiesProvider({ children }: CitiesProviderProps) {
   const [{ cities, isLoading, currentCity, error }, dispatch] = useReducer(
     reducer,
     initialState

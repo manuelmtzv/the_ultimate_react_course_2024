@@ -1,4 +1,3 @@
-// Uses the same styles as Product
 import PageNavigation from "../../components/PageNavigation";
 import styles from "./PricingView.module.css";
 

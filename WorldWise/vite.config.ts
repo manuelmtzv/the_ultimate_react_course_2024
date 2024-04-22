@@ -12,6 +12,7 @@ export default defineConfig({
       "@hooks": "/src/hooks",
       "@helpers": "/src/helpers",
       "@services": "/src/services",
+      "@views": "/src/views",
     },
   },
 });

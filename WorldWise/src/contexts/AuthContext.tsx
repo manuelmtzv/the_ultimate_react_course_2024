@@ -4,7 +4,7 @@ import { createContext } from "react";
 
 export const AuthContext = createContext<AuthContextType | null>(null);
 
-export function AuthProvider({ children }: AuthContextProviderProps) {
+export default function AuthProvider({ children }: AuthContextProviderProps) {
   const state = useAuth();
 
   return <AuthContext.Provider value={state}>{children}</AuthContext.Provider>;
